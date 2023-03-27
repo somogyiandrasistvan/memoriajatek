@@ -4,10 +4,8 @@ $(function () {
   let txt = osszealit(KEPEKLISTA);
   const ARTICLEELEM = $("article");
   ARTICLEELEM.append(txt);
-  megfordit();
-
   kattintas(KEPEKLISTA, txt);
-
+  megfordit();
 });
 
 function osszealit(KEPEKLISTA) {
@@ -30,20 +28,25 @@ function kattintas(KEPEKLISTA, txt) {
   let aktIndex = [];
   const KEPELEM = $("article img");
 
+
   KEPELEM.each(function (index) {
     $(this).on("click", function () {
       $(this).attr("src", KEPEKLISTA[index]);
       aktIndex[i] = index;
       aktElem[i] = KEPEKLISTA[index];
-      console.log("szamlalo: " + szamlalo);
-      console.log("aktIndex: " + aktIndex);
-      console.log("aktElem: " + aktElem)
       szamlalo++;
       i++;
       if (aktElem[0] == aktElem[1]) {
-        console.log("Sikerült")
-        KEPEKLISTA.splice(aktIndex[0], 1);
-        KEPEKLISTA.splice(aktIndex[1]-1, 1);
+        if(aktIndex[0] > aktIndex[1]){
+          KEPEKLISTA.splice(aktIndex[1], 1);
+          KEPEKLISTA.splice(aktIndex[0]-1, 1);
+          console.log("bement");
+        }
+        if(aktIndex[0] < aktIndex[1]){
+          KEPEKLISTA.splice(aktIndex[0], 1);
+          KEPEKLISTA.splice(aktIndex[1]-1, 1);
+          console.log("bement2");
+        }
       }
       if (szamlalo == 2) {
         i = 0;
@@ -52,21 +55,9 @@ function kattintas(KEPEKLISTA, txt) {
       }
       if (szamlalo == 3) {
         szamlalo = 1;
-        KEPELEM.attr("src", "kepek/hatter.jpg");
+        megfordit();
         $(this).attr("src", KEPEKLISTA[index]);
       }
     })
   })
 }
-
-/*
-function kattintas(KEPEKLISTA) {
-  const KEPELEM = $("article img");
-  for (let index = 0; index < KEPEKLISTA.length; index++) {
-    KEPELEM[index].addEventListener("click", function () {
-      KEPELEM[index].src = KEPEKLISTA[index]
-    });
-  }
-}
-*/
-//KEPEKLISTA.splice(aktIndex, 1);
